@@ -13,34 +13,27 @@ class String
   return colors
   end
 
-
-
   def self.create_colors
     colors.select do |key,value|
         colorful_methods = %Q{
            def #{key}
-             puts \"\e[#{value}m\#\{self\}\e[0m\"
+               puts \"\e[#{value}m\#\{self\}\e[0m\"
+           end
+           def self.#{key}(string)
+               puts \"\e[#{value}m\#\{string\}\e[0m\"
            end
         }
-        color_method = %Q{
-           def #{key} string
-             puts \"\e[#{value}m\#\{string\}\e[0m\"
-           end
-        }
+        puts colorful_methods
 
-        puts color_method
     class_eval(colorful_methods)
-    #instance_eval(color_method)
+    #class_eval(color_method)
     end
   end
 
   def self.sample_colors
     self.create_colors
     colors.select do |k,v|
-      puts "This is " + "#{k}.#{k}"
-      # module_eval("\"This is\" + \"#{k}\".#{k}")
-      #class_eval("\"This is\" + \"#{k}\".#{k}")
-      #instance_eval("\"This is\" + \"#{k}\".#{k}")
+      puts "this is \e[#{v}m#{k}\e[0m"
     end
   end
 end
@@ -56,7 +49,7 @@ puts String.sample_colors
 puts "John".red
 puts "Paul".green
 puts "George".blue
-puts blue("hello blue")
+ blue("hello blue")
 puts "Ringo".yellow
 
 
