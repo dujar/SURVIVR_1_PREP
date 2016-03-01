@@ -1,5 +1,28 @@
-class String
-  def self.colors
+class String 
+
+
+  def self.create_colors
+    Object.create_more_colors
+    colors.select do |key,value|
+        class_methods = %Q{
+           def #{key}
+               puts \"\e[#{value}m\#\{self\}\e[0m\"
+           end
+        }
+      class_eval(class_methods)
+    end
+  end
+
+  def self.sample_colors
+    colors.select do |k,v|
+      puts "this is \e[#{v}m#{k}\e[0m"
+    end
+  end
+end
+
+class Object
+
+  def colors
   colors = {
     :red => 31,
     :green => 32,
@@ -12,45 +35,32 @@ class String
     :black => 30}
   return colors
   end
-
-  def self.create_colors
+  def create_more_colors
     colors.select do |key,value|
-        colorful_methods = %Q{
-           def #{key}
-               puts \"\e[#{value}m\#\{self\}\e[0m\"
-           end
-           def self.#{key}(string)
+        instance_methods = %Q{
+           def #{key}(string)
                puts \"\e[#{value}m\#\{string\}\e[0m\"
            end
         }
-        puts colorful_methods
-
-    class_eval(colorful_methods)
-    #class_eval(color_method)
-    end
-  end
-
-  def self.sample_colors
-    self.create_colors
-    colors.select do |k,v|
-      puts "this is \e[#{v}m#{k}\e[0m"
+      class_eval(instance_methods)
     end
   end
 end
 
 String.create_colors
-puts String.methods.include?(:red)
-
-
 #require 'colorizr'
-
 puts String.colors
 puts String.sample_colors
 puts "John".red
 puts "Paul".green
 puts "George".blue
- blue("hello blue")
 puts "Ringo".yellow
+puts red("hellothere")
+
+
+
+
+#puts blue("hello blue")
 
 
 
