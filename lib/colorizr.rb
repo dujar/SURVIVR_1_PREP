@@ -35,6 +35,7 @@ class Object
     :black => 30}
   return colors
   end
+
   def create_more_colors
     colors.select do |key,value|
         instance_methods = %Q{
@@ -46,28 +47,4 @@ class Object
     end
   end
 end
-
-String.create_colors
-#require 'colorizr'
-puts String.colors
-puts String.sample_colors
-puts "John".red
-puts "Paul".green
-puts "George".blue
-puts "Ringo".yellow
-puts red("hellothere")
-
-
-
-
-#puts blue("hello blue")
-
-
-
-
-
-
-
-
-
 
