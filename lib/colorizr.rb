@@ -3,7 +3,7 @@ class String
 
   def self.create_colors
     Object.create_more_colors
-    colors.select do |key,value|
+    colors_hash.select do |key,value|
         class_methods = %Q{
            def #{key}
                puts \"\e[#{value}m\#\{self\}\e[0m\"
@@ -14,16 +14,17 @@ class String
   end
 
   def self.sample_colors
-    colors.select do |k,v|
-      puts "this is \e[#{v}m#{k}\e[0m"
+    colors_hash.keys.each do |k|
+      print "this is "
+       send(k,k)
     end
   end
 end
 
 class Object
 
-  def colors
-  colors = {
+def colors_hash
+  colors1 = {
     :red => 31,
     :green => 32,
     :yellow => 33,
@@ -33,11 +34,16 @@ class Object
     :white => 97,
     :light_grey => 37,
     :black => 30}
-  return colors
-  end
+
+ return colors1
+end
+
+def colors
+  return colors_hash.keys
+end
 
   def create_more_colors
-    colors.select do |key,value|
+    colors_hash.select do |key,value|
         instance_methods = %Q{
            def #{key}(string)
                puts \"\e[#{value}m\#\{string\}\e[0m\"

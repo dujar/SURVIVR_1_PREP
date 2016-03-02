@@ -1,10 +1,11 @@
 
 
 require 'colorizr'
-
 String.create_colors
 
-puts String.sample_colors
+String.sample_colors
+
+puts String.colors
 
 puts "John".red
 puts "Paul".green
